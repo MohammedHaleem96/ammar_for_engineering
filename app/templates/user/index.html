@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>Telegram Bot Interface</title>
+</head>
+<body>
+    <div class="container">
+        <h1>مرحبا بكم </h1>
+        <div class="grid-container">
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='icons/user-svgrepo-com.svg') }}" alt="من نحن" class="grid-image" width="100" height="100">
+                <a href="{{ url_for('user.about') }}" class="button">من نحن</a>
+            </div>
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='icons/creativity-svgrepo-com.svg') }}" alt="خدماتنا" class="grid-image" width="100" height="100">
+                <a href="{{ url_for('user.services') }}" class="button">خدماتنا</a>
+            </div>
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='icons/bank-svgrepo-com.svg') }}" alt="مشاريع منفذة" class="grid-image" width="100" height="100">
+                <a href="{{ url_for('user.completed_projects') }}" class="button">مشاريع منفذة</a>
+            </div>
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='icons/conversation-svgrepo-com.svg') }}" alt="منتجاتنا" class="grid-image" width="100" height="100">
+                <a href="{{ url_for('user.products') }}" class="button">منتجاتنا</a>
+            </div>
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='icons/set-up-svgrepo-com.svg') }}" alt="نظام الطاقة الشمسية" class="grid-image" width="100" height="100">
+                <a href="{{ url_for('calc.suitable_system') }}" method="post" class="button">احسب نظامك</a>
+            </div>
+            <div class="grid-item">
+                <img src="{{ url_for('static', filename='icons/address-svgrepo-com.svg') }}" alt="موقعنا" class="grid-image" width="100" height="100">
+                <a href="https://www.google.com/maps?q=15.458249,36.396716" target="_blank" class="button">موقعنا</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

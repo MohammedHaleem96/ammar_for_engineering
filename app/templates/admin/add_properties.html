@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Properties for {{ product_type.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h2 class="my-4">Add Properties for {{ product_type.name }}</h2>
+        <form method="POST">
+            <div class="mb-3">
+                <label for="property_name" class="form-label">Property Name</label>
+                <input type="text" class="form-control" id="property_name" name="property_name" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Add Property</button>
+        </form>
+        <hr>
+        <h4>Current Properties</h4>
+        <ul>
+            {% for property in product_type.properties %}
+                <li>{{ property.name }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

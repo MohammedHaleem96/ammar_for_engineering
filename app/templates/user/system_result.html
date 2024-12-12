@@ -1,0 +1,24 @@
+
+
+
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>نتيجة النظام الشمسي</title>
+</head>
+<body>
+    <div class="container">
+        <h1>نتيجة تقدير النظام الشمسي</h1>
+        <p>هل الكهرباء متوفرة؟: {{ 'نعم' if is_electricity_available else 'لا' }}</p>
+
+        <p>استهلاك الكهرباء الشهري: {{ usage }} kWh</p>
+        <p>النظام المقترح: {{ recommended_system }}</p>
+        <p>السعة الكلية للنظام: {{ total_system_capacity }} kW</p>
+        <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
+    </div>
+</body>
+</html>
+

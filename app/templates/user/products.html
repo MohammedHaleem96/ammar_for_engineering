@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>منتجاتنا</title>
+</head>
+<body>
+    <div class="container">
+        <h1>منتجاتنا</h1>
+        <div class="grid-container">
+            <!-- Inverters Section -->
+            <div class="grid-item">
+                
+                <img src="https://via.placeholder.com/100" alt="Inverters" class="grid-image">
+                <a href="{{ url_for('user.inverters') }}" class="button">محولات</a>
+            </div>
+
+        </div>
+
+        <!-- Back to Home Link -->
+        <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
+    </div>
+</body>
+</html>

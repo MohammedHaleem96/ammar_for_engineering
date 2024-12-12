@@ -1,0 +1,38 @@
+my_telegram_bot/
+│
+├── app/
+│   ├── __init__.py          # Initialize Flask app and register blueprints
+|   |___models
+|   |   |__ __init__.py
+|   |   |__ products.py
+|   |   |__product_types.py
+|   |   |__systems.py
+|   |   |__ admins.py
+│   ├── routes
+|   |   |__user_routes.py
+|   |   |__admin_routes.py
+|   |   |__auth_routes.py
+|   |   |__calculation_routes.py
+|   |   |__product_routes.py
+│   ├── bot.py              # Contains bot-specific logic (commands, message handlers)
+│   ├── config.py           # Configuration settings (API keys, secret keys, etc.)
+│   ├── resources/          # Folder to store downloadable files
+│   │   ├── images/         # Images folder
+│   │   │   ├── logo.png    # Example image file
+│   │   │   ├── icon.jpg    # Example image file
+│   │   ├── documents/      # Documents folder (PDFs, docs, etc.)
+│   │   │   ├── sample.pdf
+│   │   └── icons/          # Icons folder
+│   │       ├── icon1.ico
+│   │       └── icon2.ico
+│   ├── static/             # Static files served by Flask (JavaScript, CSS, etc.)
+│   └── templates/
+|       |__admin
+|       |  |__dashboad
+|       |__user
+|       |__base.html          
+│
+├── requirements.txt        # List of Python dependencies (Flask, python-telegram-bot, etc.)
+├── Procfile                # For deploying on platforms like Heroku
+├── .env                    # Environment variables (API keys, Telegram token, etc.)
+└── run.py                  # Entry point to run the app locally or start the bot

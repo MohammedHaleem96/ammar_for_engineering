@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>احسب النظام المناسب لك</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/calc.css') }}">
+    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
+
+</head>
+<body>
+    <div class="container">
+        <h1>احسب النظام المناسب لك</h1>
+        <!-- Form starts here -->
+        <form action="{{ url_for('calc.estimate_system') }}" method="post" id="estimateForm" >
+
+            <!-- Question 1: Electricity Availability -->
+            <div class="form-group">
+                <select id="is_electricity_available" name="is_electricity_available" onchange="toggleSolarPanelQuestion()">
+                    <option value="yes">نعم</option>
+                    <option value="no">لا</option>
+                </select>
+                <label for="is_electricity_available">هل الكهرباءالعامة متاحة عندكم ؟</label>   
+            </div>
+         <!-- Question 2: Hours of Electricity Available -->
+            <div class="form-group">
+                <input type="number" id="electricity_available_hours" name="electricity_available_hours" min="0" max="24" value="0" >
+                <label for="electricity_available_hours">كم عدد الساعات التي تتوفر فيها الكهرباء؟</label>
+            </div>
+            <!-- Question 3: Do you want solar panels? -->
+            <div class="form-group">
+                    <select id="is_want_panels" name="is_want_panels" >
+                        <option value="yes">نعم</option>
+                        <option value="no">لا</option>
+                    </select>
+                <label for="is_want_panels">هل ترغب في تركيب الألواح الشمسية؟</label>
+            </div>
+
+            <div class="form-group">
+                <input type="number" id="total_hours_needed" name="total_hours_needed" min="0" max="24" value="0">
+                <label for="total_hours_needed">كم عدد الساعات التي تحتاجها من الكهرباء المتواصلة؟</label>
+                
+            </div>
+            <!-- Load Section: Appliance Selection with + and - buttons -->
+            <h2>الأحمال الكهربائية</h2>
+            <div id="loadItems">
+                <!-- Example Load Item: Fan -->
+                <div class="load-item">
+                    <label>عدد الغرف</label>
+                    <button type="button" onclick="decreaseLoad('room')">-</button>
+                    <span id="room-count">0</span>
+                    <button type="button" onclick="increaseLoad('room')">+</button>
+                </div>
+                <div class="load-item">
+                    <label>عدد المكيفات</label>
+                    <button type="button" onclick="decreaseLoad('aircond')">-</button>
+                    <span id="aircond-count">0</span>
+                    <button type="button" onclick="increaseLoad('aircond')">+</button>
+                </div>
+                <div class="load-item">
+                    <label>عدد الثلاجات</label>
+                    <button type="button" onclick="decreaseLoad('fridge')">-</button>
+                    <span id="fridge-count">0</span>
+                    <button type="button" onclick="increaseLoad('fridge')">+</button>
+                </div>
+                
+                <div class="load-item">
+                    <label>عدد موتورات امياه نص حصان</label>
+                    <button type="button" onclick="decreaseLoad('motor')">-</button>
+                    <span id="motor-count">0</span>
+                    <button type="button" onclick="increaseLoad('motor')">+</button>
+                </div>
+                <!-- Additional load items can be added here similarly -->
+            </div>
+            <!-- Real-Time Cost Estimation Display -->
+            <h2>الحمولة التقديرية</h2>
+            <p>حمولة النظام حتى الآن: <span id="estimatedLoad">0
+            </span>  واط</p>
+            <p> تكلفة حتى الآن: <span id="estimatedCost">0</span>  جنيه</p>
+
+
+            <!-- Submit Button for Final Calculation -->
+            <button type="submit">احسب التكلفة النهائية</button>
+        </form>
+    </div>
+
+
+</body>
+</html>

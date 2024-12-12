@@ -1,0 +1,53 @@
+body {
+    background-color: #f0f8ff; /* Light blue background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #ffffff; /* White background for the form */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+.login-container h1 {
+    color: #0044cc; /* Blue text for the title */
+    font-family: 'Arial', sans-serif;
+}
+
+.btn-blue-gold {
+    background-color: #0044cc; /* Blue button */
+    color: white;
+}
+
+.btn-blue-gold:hover {
+    background-color: #ffd700; /* Gold hover effect */
+    color: #0044cc;
+}
+
+.form-control:focus {
+    border-color: #ffd700; /* Goldish border color when input is focused */
+    box-shadow: 0 0 5px 0 rgba(255, 215, 0, 0.5);
+}
+
+.flash-message {
+    font-size: 0.9rem;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.flash-success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.flash-error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
