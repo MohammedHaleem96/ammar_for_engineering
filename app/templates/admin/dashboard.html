@@ -252,13 +252,13 @@
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="{{url_for('admin.products')}}">
                 <svg class="bi"><use xlink:href="#cart"/></svg>
-                Add Products
+                Products Management
               </a>
             </li>
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="#">
                 <svg class="bi"><use xlink:href="#people"/></svg>
-                Customers
+                Accomplished Projects
               </a>
             </li>
             <li class="nav-item">
@@ -307,7 +307,12 @@
               </a>
             </li>
           </ul>
-
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center gap-2" href="{{url_for('admin.add_type')}}">
+              <svg class="bi"><use xlink:href=""/></svg>
+              add product type
+            </a>
+          </li>
           <hr class="my-3">
 
           <ul class="nav flex-column mb-auto">

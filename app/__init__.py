@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect
 
 from .config import Config
-
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from flask_migrate import Migrate
@@ -11,7 +10,7 @@ login_manager = LoginManager()
 migrate = Migrate()
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__,static_folder='static')
     
     app.config.from_object(Config)
     db.init_app(app)
@@ -28,7 +27,17 @@ def create_app():
         app.register_blueprint(admin_bp, url_prefix='/admin')
         app.register_blueprint(calc_bp, url_prefix='/calc')
         
-    
+
+
+
+
+        
+    @app.template_filter('currency')
+    def currency_filter(value):
+        """Format a number as currency."""
+        if value is None:
+            return ''
+        return f"{value:,.0f}"  # Adjust for your desired format
 
     @app.route('/')
     def index():

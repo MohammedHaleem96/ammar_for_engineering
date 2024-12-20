@@ -1,90 +1,284 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>احسب النظام المناسب لك</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/calc.css') }}">
-    <script src="{{ url_for('static', filename='scripts/script.js') }}"></script>
-
+    <title>استبيان الأحمال الكهربائية</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #001f3f;
+        }
+        .section {
+            background-color: #ffffff;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .icon-card {
+            text-align: center;
+        }
+        .icon-card i {
+            font-size: 50px;
+            color: #007bff;
+        }
+        .counter {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0 10px;
+        }
+        .btn-adjust {
+            font-size: 18px;
+            width: 40px;
+            height: 40px;
+            line-height: 1;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>احسب النظام المناسب لك</h1>
-        <!-- Form starts here -->
-        <form action="{{ url_for('calc.estimate_system') }}" method="post" id="estimateForm" >
-
-            <!-- Question 1: Electricity Availability -->
-            <div class="form-group">
-                <select id="is_electricity_available" name="is_electricity_available" onchange="toggleSolarPanelQuestion()">
+<div class="container mt-4">
+    <!-- القسم الأول: الأسئلة -->
+    <div class="section">
+        <h2 class="text-center mb-4">الرجاء إدخال المعلومات التالية</h2>
+        <form action="{{ url_for('calc.estimate_system') }}" method="POST">
+            <!-- السؤال 1 -->
+            <div class="mb-3">
+                <label class="form-label">هل لديك كهرباء عامة؟</label>
+                <select class="form-select" name="is_electricity_available" id="public-electricity" onchange="toggleCapacityInput()">
+                    <option value="no">لا</option>
+                    <option value="yes">نعم</option>
+                </select>
+            </div>
+            <!-- إدخال السعة عند اختيار "نعم" -->
+            <div class="mb-3" id="capacity-input" style="display: none;">
+                <label class="form-label">كم عدد الساعات المتاحة من الكهرباء في اليوم؟ (بالساعات)</label>
+                <input type="number" class="form-control" min="0" max="24" id="capacity" name="electricity_available_hours" value="0">
+            </div>
+            <!-- السؤال 2 -->
+            <div class="mb-3" id="solar-need" style="display: none;">
+                <label class="form-label" >هل تريد تركيب ألواح شمسية؟</label>
+                <select class="form-select" name="is_want_panels" >
                     <option value="yes">نعم</option>
                     <option value="no">لا</option>
                 </select>
-                <label for="is_electricity_available">هل الكهرباءالعامة متاحة عندكم ؟</label>   
             </div>
-         <!-- Question 2: Hours of Electricity Available -->
-            <div class="form-group">
-                <input type="number" id="electricity_available_hours" name="electricity_available_hours" min="0" max="24" value="0" >
-                <label for="electricity_available_hours">كم عدد الساعات التي تتوفر فيها الكهرباء؟</label>
+            <!-- السؤال 3 -->
+            <div class="mb-3">
+                <label class="form-label">كم من الزمن تريد استمرار التيار الكهربائي دون انقطاع؟ (بالساعات)</label>
+                <input type="number" class="form-control" min="0" max="24" name="total_hours_needed" value="0">
             </div>
-            <!-- Question 3: Do you want solar panels? -->
-            <div class="form-group">
-                    <select id="is_want_panels" name="is_want_panels" >
-                        <option value="yes">نعم</option>
-                        <option value="no">لا</option>
-                    </select>
-                <label for="is_want_panels">هل ترغب في تركيب الألواح الشمسية؟</label>
+            <!-- السؤال 4 -->
+            <div class="mb-3">
+                <label class="form-label">كم عدد الغرف في البيت؟</label>
+                <input type="number" class="form-control" name="number_of_rooms" min="0" value="0">
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" id="total_load" name="total_load" min="0" hidden>
+            </div>
+            
+    </div>
+
+    <!-- القسم: اختيار الحمل الكهربائي -->
+    <div class="section">
+        <h2 class="text-center mb-4">اختيار الأحمال الكهربائية</h2>
+        <div class="row">
+            <!-- اختيار الحمل -->
+            <div class="col-md-4">
+                <label for="load-select" class="form-label">اختر الحمل:</label>
+                <select id="load-select" class="form-select" onchange="populateTypeOptions()">
+                    <option value="">-- اختر الحمل --</option>
+                    <option value="motor">موتور</option>
+                    <option value="fridge">ثلاجة</option>
+                    <option value="fan">مروحة</option>
+                </select>
             </div>
 
-            <div class="form-group">
-                <input type="number" id="total_hours_needed" name="total_hours_needed" min="0" max="24" value="0">
-                <label for="total_hours_needed">كم عدد الساعات التي تحتاجها من الكهرباء المتواصلة؟</label>
-                
+            <!-- اختيار النوع -->
+            <div class="col-md-4">
+                <label for="type-select" class="form-label">اختر النوع:</label>
+                <select id="type-select" class="form-select">
+                    <option value="">-- اختر النوع --</option>
+                </select>
             </div>
-            <!-- Load Section: Appliance Selection with + and - buttons -->
-            <h2>الأحمال الكهربائية</h2>
-            <div id="loadItems">
-                <!-- Example Load Item: Fan -->
-                <div class="load-item">
-                    <label>عدد الغرف</label>
-                    <button type="button" onclick="decreaseLoad('room')">-</button>
-                    <span id="room-count">0</span>
-                    <button type="button" onclick="increaseLoad('room')">+</button>
-                </div>
-                <div class="load-item">
-                    <label>عدد المكيفات</label>
-                    <button type="button" onclick="decreaseLoad('aircond')">-</button>
-                    <span id="aircond-count">0</span>
-                    <button type="button" onclick="increaseLoad('aircond')">+</button>
-                </div>
-                <div class="load-item">
-                    <label>عدد الثلاجات</label>
-                    <button type="button" onclick="decreaseLoad('fridge')">-</button>
-                    <span id="fridge-count">0</span>
-                    <button type="button" onclick="increaseLoad('fridge')">+</button>
-                </div>
-                
-                <div class="load-item">
-                    <label>عدد موتورات امياه نص حصان</label>
-                    <button type="button" onclick="decreaseLoad('motor')">-</button>
-                    <span id="motor-count">0</span>
-                    <button type="button" onclick="increaseLoad('motor')">+</button>
-                </div>
-                <!-- Additional load items can be added here similarly -->
+
+            <!-- إدخال الكمية -->
+            <div class="col-md-4">
+                <label for="quantity-input" class="form-label">أدخل الكمية:</label>
+                <input type="number" class="form-control" id="quantity-input" min="1" value="1">
             </div>
-            <!-- Real-Time Cost Estimation Display -->
-            <h2>الحمولة التقديرية</h2>
-            <p>حمولة النظام حتى الآن: <span id="estimatedLoad">0
-            </span>  واط</p>
-            <p> تكلفة حتى الآن: <span id="estimatedCost">0</span>  جنيه</p>
 
+            <!-- زر إضافة الحمل -->
+            <div class="col-md-4 d-flex align-items-end mt-4">
+                <button class="btn btn-primary w-100" onclick="addLoadRow()">إضافة الحمل</button>
+            </div>
+        </div>
+    </div>
 
-            <!-- Submit Button for Final Calculation -->
-            <button type="submit">احسب التكلفة النهائية</button>
-        </form>
+    <!-- القسم: جدول عرض الأحمال -->
+    <div class="section">
+        <h2 class="text-center mb-4">تفاصيل الأحمال المختارة</h2>
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>اسم الحمل</th>
+                    <th>النوع</th>
+                    <th>السعة (واط)</th>
+                    <th>الكمية</th>
+                    <th>الإجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="load-table-body">
+                <!-- الصفوف ستتم إضافتها هنا -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- الصف النهائي للمجموع -->
+    <div class="section">
+        <h3 class="text-center">المجموع الإجمالي للأحمال</h3>
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th>المجموع الإجمالي (واط)</th>
+                </tr>
+            </thead>
+            <tbody id="total-load-row">
+                <tr>
+                    <td id="total-load">0 واط</td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-success">حساب النظام المناسب </button>
+
     </div>
 
 
+</div>
+</form>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+
+function toggleCapacityInput() {
+        const capacityInput = document.getElementById("capacity-input");
+        const solarNeed = document.getElementById("solar-need");
+
+        const publicElectricity = document.getElementById("public-electricity").value;
+        capacityInput.style.display = publicElectricity === "yes" ? "block" : "none";
+        solarNeed.style.display = publicElectricity === "yes" ? "block" : "none";
+
+    }
+    // بيانات الأحمال الكهربائية (نظريًا تأتي من قاعدة البيانات)
+    const loadData = {
+        "motor": [
+            { "type": "1 حصان", "capacity": 750 },
+            { "type": "2 حصان", "capacity": 1500 },
+            { "type": "3 حصان", "capacity": 2200 }
+        ],
+        "fridge": [
+            { "type": "ثلاجة صغيرة", "capacity": 100 },
+            { "type": "ثلاجة كبيرة", "capacity": 150 }
+        ],
+        "fan": [
+            { "type": "مروحة صغيرة", "capacity": 50 },
+            { "type": "مروحة كبيرة", "capacity": 75 }
+        ]
+    };
+
+    // دالة لملء قائمة الأنواع بناءً على الحمل المختار
+    function populateTypeOptions() {
+        const loadSelect = document.getElementById('load-select');
+        const typeSelect = document.getElementById('type-select');
+        const selectedLoad = loadSelect.value;
+
+        // تفريغ القائمة
+        typeSelect.innerHTML = '<option value="">-- اختر النوع --</option>';
+
+        // إضافة الأنواع المتاحة
+        if (selectedLoad && loadData[selectedLoad]) {
+            loadData[selectedLoad].forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.type;
+                option.innerText = item.type;
+                typeSelect.appendChild(option);
+            });
+        }
+    }
+
+    // دالة لإضافة صف جديد إلى الجدول
+    function addLoadRow() {
+        event.preventDefault(); // منع إرسال النموذج عند الضغط على الزر
+
+        const loadSelect = document.getElementById('load-select');
+        const typeSelect = document.getElementById('type-select');
+        const quantityInput = document.getElementById('quantity-input');
+        const tableBody = document.getElementById('load-table-body');
+        const totalLoad = document.getElementById('total-load');
+
+        const selectedLoad = loadSelect.value;
+        const selectedType = typeSelect.value;
+        const quantity = parseInt(quantityInput.value);
+
+        if (selectedLoad && selectedType && quantity > 0) {
+            const loadDetails = loadData[selectedLoad].find(item => item.type === selectedType);
+
+            // إنشاء صف جديد
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td>${loadSelect.options[loadSelect.selectedIndex].text}</td>
+                <td>${selectedType}</td>
+                <td>${loadDetails.capacity} واط</td>
+                <td>${quantity}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm" onclick="deleteRow(this)">حذف</button>
+                </td>
+            `;
+
+            // إضافة الصف إلى الجدول
+            tableBody.appendChild(newRow);
+
+
+            // تحديث المجموع
+            updateTotalLoad(quantity * loadDetails.capacity);
+
+
+            // إعادة تعيين الحقول
+            loadSelect.value = "";
+            typeSelect.innerHTML = '<option value="">-- اختر النوع --</option>';
+            quantityInput.value = 1;
+        } else {
+            alert("الرجاء اختيار الحمل والنوع وإدخال الكمية.");
+        }
+    }
+
+    // دالة لتحديث المجموع الإجمالي
+    function updateTotalLoad(newLoad) {
+        const totalLoadCell = document.getElementById('total-load');
+        let currentTotal = parseInt(totalLoadCell.innerText.split(' ')[0]);
+        currentTotal += newLoad;
+        totalLoadCell.innerText = `${currentTotal} واط`;
+        document.getElementById('total_load').value = currentTotal ;
+    }
+
+    // دالة لحذف الصف
+    function deleteRow(button) {
+        const row = button.closest('tr');
+        const capacity = parseInt(row.cells[2].innerText.split(' ')[0]);
+        const quantity = parseInt(row.cells[3].innerText);
+        const totalLoad = capacity * quantity;
+
+        // تحديث المجموع بعد الحذف
+        updateTotalLoad(-totalLoad);
+
+        // حذف الصف
+        row.remove();
+    }
+</script>
 </body>
 </html>

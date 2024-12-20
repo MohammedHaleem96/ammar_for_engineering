@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request,Blueprint
+from app.models.products import Product, Inverter, Battery, Panel,ProductType
+
+from app import db
 
 user_bp = Blueprint('user', __name__)
 
 @user_bp.route('/')
 def index():
+
     return render_template('user/index.html')
 
 @user_bp.route('/about')
@@ -20,7 +24,9 @@ def completed_projects():
 
 @user_bp.route('/products')
 def products():
-    return render_template('user/products.html')
+    product_types = ProductType.query.options(db.joinedload(ProductType.products)).all()
+
+    return render_template('user/products.html',product_types=product_types)
 
 
 
