@@ -1,9 +1,24 @@
 from flask import Flask, render_template, request,Blueprint
 from app.models.products import Product, Inverter, Battery, Panel,ProductType
+from app.models.AccomplishedProject import AccomplishedProject
+
 
 from app import db
 
 user_bp = Blueprint('user', __name__)
+
+
+
+# Example project data for Sudan
+PROJECT_DATA = [
+    {"location": "Khartoum", "lat": 15.5007, "lng": 32.5599, "projects": 50},
+    {"location": "Port Sudan", "lat": 19.6158, "lng": 37.2153, "projects": 30},
+    {"location": "Omdurman", "lat": 15.6445, "lng": 32.4777, "projects": 40},
+    {"location": "El Obeid", "lat": 13.1833, "lng": 30.2167, "projects": 20},
+    {"location": "Kassala", "lat": 15.4500, "lng": 36.4000, "projects": 25},
+]
+
+
 
 @user_bp.route('/')
 def index():
@@ -20,7 +35,9 @@ def services():
 
 @user_bp.route('/completed-projects')
 def completed_projects():
-    return render_template('user/completed_projects.html')
+    projects = AccomplishedProject.query.all()
+
+    return render_template('user/accomplished_projects.html',projects = projects)
 
 @user_bp.route('/products')
 def products():

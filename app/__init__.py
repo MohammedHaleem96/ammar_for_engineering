@@ -1,5 +1,4 @@
 from flask import Flask, render_template, redirect
-
 from .config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
@@ -17,7 +16,7 @@ def create_app():
     migrate.init_app(app, db)
     login_manager.init_app(app)
     # Tell login manager where to redirect for login
-    login_manager.login_view = 'auth.login'  # For example, redirect to login page if not logged in
+    login_manager.login_view = 'admin.login'  # For example, redirect to login page if not logged in
     with app.app_context():
         from app.routes.user_routes import user_bp  # Import user routes blueprint
         from app.routes.admin_routes import admin_bp  # Import admin routes blueprint

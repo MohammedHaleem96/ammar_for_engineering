@@ -1,4 +1,4 @@
-from app.models.products import Product, Inverter, Battery, Panel,ProductType
+from app.models.products import Product, Inverter, Battery, Panel,ProductType,Wire
 from flask import Flask, render_template, request,Blueprint
 from app import db
 
@@ -89,4 +89,84 @@ def estimate_system():
                                )
 
     return render_template('estimate_form.html')
+
+
+
+
+
+
+calc_bp = Blueprint('calc', __name__)
+
+@calc_bp.route('/estimate_system', methods=['POST'])
+def estimate_system():
+    # Retrieve user input
+    total_load = int(request.form.get('total_load'))
+    electricity_available = request.form.get('is_electricity_available') == "yes"
+    electricity_hours = int(request.form.get('electricity_available_hours', 0))
+    solar_needed = request.form.get('is_want_panels') == "yes"
+    hours_needed = int(request.form.get('total_hours_needed', 0))
+
+    # 1. Calculate battery requirements
+    required_battery_capacity = total_load * hours_needed  # in watt-hours
+
+    # 2. Select suitable inverter
+    suitable_inverters = Inverter.query.filter(Inverter.capacity >= total_load).order_by(Inverter.price).all()
+
+    # 3. Calculate solar panel requirements if needed
+    solar_suggestions = []
+    if solar_needed:
+        daily_energy_needs = total_load * hours_needed
+        suitable_panels = Panel.query.order_by(Panel.price).all()
+        for panel in suitable_panels:
+            num_panels = -(-daily_energy_needs // panel.capacity)  # Ceiling division
+            solar_suggestions.append({
+                "panel": panel,
+                "quantity": num_panels,
+                "total_cost": num_panels * panel.price
+            })
+
+    # 4. Calculate cable costs (assume 10 meters by default)
+    cable_cost_per_meter = Wire.query.first().price_per_meter
+    total_cable_cost = 10 * cable_cost_per_meter
+
+    # 5. Combine options and calculate costs
+    system_options = []
+    suitable_batteries = Battery.query.order_by(Battery.price).all()
+    for inverter in suitable_inverters:
+        for battery in suitable_batteries:
+            num_batteries = -(-required_battery_capacity // battery.capacity)  # Ceiling division
+            battery_cost = num_batteries * battery.price
+            inverter_cost = inverter.price
+            total_cost = inverter_cost + battery_cost + total_cable_cost
+
+            if solar_needed:
+                for solar in solar_suggestions:
+                    option = {
+                        "inverter": inverter,
+                        "batteries": {
+                            "type": battery,
+                            "quantity": num_batteries,
+                            "total_cost": battery_cost
+                        },
+                        "solar": solar,
+                        "cable_cost": total_cable_cost,
+                        "total_cost": total_cost + solar["total_cost"]
+                    }
+                    system_options.append(option)
+            else:
+                option = {
+                    "inverter": inverter,
+                    "batteries": {
+                        "type": battery,
+                        "quantity": num_batteries,
+                        "total_cost": battery_cost
+                    },
+                    "cable_cost": total_cable_cost,
+                    "total_cost": total_cost
+                }
+                system_options.append(option)
+
+    # Render the results
+    return render_template('user/system_options.html', system_options=system_options)
+
 

@@ -5,6 +5,14 @@
               <label for="inverter_power" class="form-label">Power Rating (W)</label>
               <input type="number" id="inverter_power" name="inverter_power" class="form-control"  placeholder="Power Rating" >
             </div>
+            <div class="col-2">
+              <label for="inverter_type" class="form-label">inverter type</label>
+            <select id="inverter_type" name="inverter_type" >       
+              {% for type in types %}
+              <option value="{{type}}" name="{{type}}">{{type}}</option>
+              {% endfor %}
+            </select>    
+          </div>
 
             <div class="col-2">
               <label for="inverter_battery_voltage" class="form-label">Battery Voltage</label>
@@ -42,10 +50,6 @@
             <input type="number" id="inverter_max_pv_current" name="inverter_max_pv_current" class="form-control" placeholder="Max Pv Current" >
           </div>
 
-          <div class="col-2">
-            <label for="inverter_pv_charging_current" class="form-label">pv charging current</label>
-            <input type="number" id="inverter_pv_charging_current" name="inverter_pv_charging_current" class="form-control" placeholder="charging current">
-          </div>
 
         </div>
         <div class="row mb-2">
@@ -65,6 +69,11 @@
 <h5>Ac Charger</h5>
         
         <div class="row mb-2">
+          <div class="col-2">
+            <label for="pv_max_charging_current" class="form-label">pv_max_charging_currentt</label>
+            <input type="number" id="pv_max_charging_current" name="pv_max_charging_current" class="form-control" placeholder="pv_max_charging_current" >
+            </div>
+
 
               <div class="col-2">
               <label for="inverter_max_ac_charging_current" class="form-label">Maximum Ac Charge Current</label>

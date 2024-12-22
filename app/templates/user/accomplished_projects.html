@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
+    <title>مشاريع منفذة</title>
+</head>
+<body>
+    <div class="container">
+        <h1>  مرحبا </h1>
+        <p>هذا الموقع قيد الإنشاء. يرجى العودة لاحقًا.</p>
+
+
+
+
+
+<div class="container mt-5">
+    <h2 class="text-center">Accomplished Projects</h2>
+    <div class="row">
+        {% for project in projects %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.name }}</h5>
+                    <p class="card-text"><strong>Type:</strong> {{ project.type }}</p>
+                    <p class="card-text"><strong>Location:</strong> {{ project.location }}</p>
+                    <p class="card-text"><strong>Description:</strong> {{ project.description }}</p>
+                    <p class="card-text"><strong>Completion Date:</strong> {{ project.completion_date }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+        <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
+    </div>
+</body>
+</html>
+
+

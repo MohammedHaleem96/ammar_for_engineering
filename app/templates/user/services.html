@@ -7,10 +7,37 @@
     <title>خدماتنا</title>
 </head>
 <body>
+
     <div class="container">
         <h1>مرحبًا  </h1>
         <p>هذا الموقع قيد الإنشاء. يرجى العودة لاحقًا.</p>
+
+
+
+        <!--  extends 'user/base.html'  -->
+
+        {% block content %}
+        <div class="container mt-5">
+            <h2>Our Services</h2>
+            
+            <div class="row">
+                {% for service in services %}
+                    <div class="col-md-4">
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ service.name }}</h5>
+                                <p class="card-text">{{ service.description }}</p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endblock %}
+
+
         <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
     </div>
 </body>
 </html>
+
