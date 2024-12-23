@@ -1,56 +1,29 @@
- <!-- panel Properties (Hidden by Default) -->
- <h5>=========== Panel Properties ===========</h5>
- <div class="row mb-2">
-     <div class="col-2">
-       <label for="panel_power" class="form-label">Power Rating (W)</label>
-       <input type="number" id="panel_power" name="panel_power" class="form-control" placeholder="Power Rating"  >
-     </div>
-
-     <div class="col-2">
-       <label for="panel_alpha" class="form-label">panel_alpha</label>
-       <input type="number" id="panel_alpha" name="panel_alpha" class="form-control" placeholder="panel_alpha"  >
-     </div>
- </div>
-
- <div class="row mb-2">
-
-   <div class="col-2">
-     <label for="panel_vmp" class="form-label">panel_vmp</label>
-     <input type="number" id="panel_vmp" name="panel_vmp" class
-   </div>
-
-   <div class="col-2">
-    <label for="panel_voc" class="form-label">panel voc</label>
-    <input type="number" id="panel_voc" name="panel_voc" class="form-control" placeholder="panel voc " >
-  </div>
-  </div>
-  <div class="row mb-2">
-
-   <div class="col-2">
-     <label for="panel_isc" class="form-label">panel_isc</label>
-     <input type="number" id="panel_isc" name="panel_vmp" class="form-control" placeholder="panel_isc" >
-   </div>
+<h5>=========== Panel Properties ===========</h5>
+<div class="row mb-2">
     <div class="col-2">
-     <label for="panel_imp" class="form-label">panel_imp</label>
-     <input type="number" id="panel_imp" name="panel_imp" class="form-control" placeholder="panel_imp">
-   </div>
-
- </div>
-
- <div class="row mb-2">
-   <div class="col-2">
-     <label for="panel_length" class="form-label">panel_length</label>
-     <input type="number" id="panel_length" name="panel_length" class="form-control" placeholder="panel_length" >
-   </div>
-
-   <div class="col-2">="form-control" placeholder="panel_vmp" >
-    <label for="panel_width" class="form-label">panel_width</label>
-    <input type="number" id="panel_width" name="panel_width" class="form-control" placeholder="panel_width" >
-  </div>
-
-  <div class="col-2">
-    <label for="panel_thickness" class="form-label">panel_thickness</label>
-    <input type="number" id="panel_thickness" name="panel_thickness" class="form-control" placeholder="panel_length" >
-  </div>
-
-  </div>
+        <label for="panel_wattage" class="form-label">Wattage (W)</label>
+        <input type="number" id="panel_wattage" name="panel_wattage" class="form-control" placeholder="Wattage">
+    </div>
+    <div class="col-2">
+        <label for="panel_dimensions" class="form-label">Dimensions (L x W)</label>
+        <input type="text" id="panel_dimensions" name="panel_dimensions" class="form-control" placeholder="Length x Width">
+    </div>
+    <div class="col-2">
+        <label for="panel_thickness" class="form-label">Thickness (m)</label>
+        <input type="number" step="0.01" id="panel_thickness" name="panel_thickness" class="form-control" placeholder="Thickness">
+    </div>
+</div>
+<div class="row mb-2">
+    <div class="col-2">
+        <label for="panel_voc" class="form-label">Open Circuit Voltage (Voc)</label>
+        <input type="number" id="panel_voc" name="panel_voc" class="form-control" placeholder="Voc">
+    </div>
+    <div class="col-2">
+        <label for="panel_vmp" class="form-label">Voltage at Max Power (Vmp)</label>
+        <input type="number" id="panel_vmp" name="panel_vmp" class="form-control" placeholder="Vmp">
+    </div>
+    <div class="col-2">
+        <label for="panel_isc" class="form-label">Short Circuit Current (Isc)</label>
+        <input type="number" step="0.01" id="panel_isc" name="panel_isc" class="form-control" placeholder="Isc">
+    </div>
+</div>

@@ -1,42 +1,139 @@
 <!DOCTYPE html>
 <html lang="ar">
+
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - MultiBusiness Installations</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-    <title>خدماتنا</title>
+    <!-- Bootstrap CSS -->
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .service-card {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .service-card-body {
+            padding: 15px;
+        }
+        .service-card h5 {
+            font-size: 1.25rem;
+            color: #007bff;
+        }
+        .service-card p {
+            font-size: 1rem;
+        }
+    </style>
 </head>
+
+
 <body>
 
-    <div class="container">
-        <h1>مرحبًا  </h1>
-        <p>هذا الموقع قيد الإنشاء. يرجى العودة لاحقًا.</p>
 
-
-
-        <!--  extends 'user/base.html'  -->
-
-        {% block content %}
-        <div class="container mt-5">
-            <h2>Our Services</h2>
-            
-            <div class="row">
-                {% for service in services %}
+    <!-- Header Section -->
+    <header class="container mt-5">
+        <h1 class="text-center text-primary mb-4">Our Services</h1>
+        <p class="text-center">
+            We specialize in providing high-quality installations across various industries. Whether you're looking for solar power solutions, air conditioning, security systems, or network setup, we've got you covered!
+        </p>
+    </header>
+        
+            <!-- Services Section -->
+            <section class="container">
+                <div class="row">
+                    <!-- Solar Installation Service (Dummy Data) -->
                     <div class="col-md-4">
-                        <div class="card mb-4">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ service.name }}</h5>
-                                <p class="card-text">{{ service.description }}</p>
+                        <div class="service-card">
+                            <img src="https://via.placeholder.com/400x200" alt="Solar Installation">
+                            <div class="service-card-body">
+                                <h5>Solar Installation</h5>
+                                <p>We offer complete solar energy installation services for residential, commercial, and industrial properties. Our expert team ensures efficient and cost-effective solutions to power your home or business with renewable energy.</p>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            </div>
-        </div>
-        {% endblock %}
+        
+                    <!-- Air Conditioning Installation Service (Dummy Data) -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://via.placeholder.com/400x200" alt="Air Conditioning Installation">
+                            <div class="service-card-body">
+                                <h5>Air Conditioning Installation</h5>
+                                <p>Our certified technicians provide professional air conditioning installations tailored to your needs. We specialize in residential and commercial AC systems to ensure optimal comfort throughout the year.</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- CCTV Installation Service (Dummy Data) -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://via.placeholder.com/400x200" alt="CCTV Installation">
+                            <div class="service-card-body">
+                                <h5>CCTV Installation</h5>
+                                <p>We offer professional CCTV installation services to enhance security for your home or business. Our systems provide 24/7 monitoring and peace of mind with cutting-edge technology and expert installation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="row">
+                    <!-- Network Installation Service (Dummy Data) -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://via.placeholder.com/400x200" alt="Network Installation">
+                            <div class="service-card-body">
+                                <h5>Network Installation</h5>
+                                <p>We provide reliable network installation services for businesses and homes. Whether it's a wired or wireless setup, our technicians ensure seamless connectivity to support your day-to-day operations.</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Electrical Installation Service (Dummy Data) -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://via.placeholder.com/400x200" alt="Electrical Installation">
+                            <div class="service-card-body">
+                                <h5>Electrical Installation</h5>
+                                <p>We offer expert electrical installation services for all your power needs. From wiring to installing electrical panels, we ensure safe and efficient electrical systems that comply with local regulations.</p>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <!-- Custom Installations Service (Dummy Data) -->
+                    <div class="col-md-4">
+                        <div class="service-card">
+                            <img src="https://via.placeholder.com/400x200" alt="Custom Installations">
+                            <div class="service-card-body">
+                                <h5>Custom Installations</h5>
+                                <p>In addition to standard installations, we provide custom solutions for unique requirements. No matter the complexity, we can design and install systems that meet your specific needs.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+            <!-- Footer Section -->
+            <footer class="container mt-5">
+                <div class="text-center">
+                    <p class="text-muted">© 2024 MultiBusiness Installations. All rights reserved.</p>
+                </div>
+                <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
 
+            </footer>
+        
+            <!-- Bootstrap JS (Optional) -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
 
-        <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
     </div>
 </body>
 </html>

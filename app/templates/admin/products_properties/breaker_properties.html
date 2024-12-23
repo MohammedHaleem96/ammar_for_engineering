@@ -1,0 +1,23 @@
+<h5>=========== Breaker Properties ===========</h5>
+<div class="row mb-2">
+    <div class="col-2">
+        <label for="breaker_rated_current" class="form-label">Rated Current (A)</label>
+        <input type="number" id="breaker_rated_current" name="breaker_rated_current" class="form-control" placeholder="Rated Current">
+    </div>
+    <div class="col-2">
+        <label for="breaker_rated_voltage" class="form-label">Rated Voltage (V)</label>
+        <input type="number" id="breaker_rated_voltage" name="breaker_rated_voltage" class="form-control" placeholder="Rated Voltage">
+    </div>
+    <div class="col-2">
+        <label for="breaker_poles" class="form-label">Number of Poles</label>
+        <input type="number" id="breaker_poles" name="breaker_poles" class="form-control" placeholder="Poles">
+    </div>
+    <div class="col-2">
+        <label for="breaker_category" class="form-label">Category</label>
+        <select id="breaker_category" name="breaker_category" class="form-control">
+            {% for category in categories %}
+                <option value="{{ category }}">{{ category }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>

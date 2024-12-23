@@ -68,19 +68,31 @@
                         </select>
                                             <!-- Product Properties Sections -->
                 <div id="hide">
+
                     <div id="inverterProperties" class="product-properties mb-3" style="display: none;">
                         {% include 'admin/products_properties/inverter_properties.html' %}
                     </div>
+
                     <div id="batteryProperties" class="product-properties mb-3" style="display: none;">
                         {% include 'admin/products_properties/battery_properties.html' %}
                     </div>
+
                     <div id="panelProperties" class="product-properties mb-3" style="display: none;">
                         {% include 'admin/products_properties/panel_properties.html' %}
                     </div>
+
                     <div id="breakerProperties" class="product-properties mb-3" style="display: none;">
                         {% include 'admin/products_properties/breaker_properties.html' %}
                     </div>
+                    
+                    <div id="wireProperties" class="product-properties mb-3" style="display: none;">
+                        {% include 'admin/products_properties/wire_properties.html' %}
+                    </div>
 
+                  
+                    <div id="solarLampProperties" class="product-properties mb-3" style="display: none;">
+                        {% include 'admin/products_properties/solar_lamp_properties.html' %}
+                    </div>
                 </div>
 
 
@@ -94,89 +106,85 @@
                 </form>
             </div>
         </div>
+<!-- Products Grid -->
+<div class="container my-5">
+    {% for product_type in product_types %}
+        <div class="card mb-4 shadow">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="mb-0">{{ product_type.name }}</h5>
+            </div>
+            <div class="card-body">
+                {% if product_type.products %}
+                    <div class="row g-4">
+                        {% for product in product_type.products %}
+                            <div class="col-md-4">
+                                <div class="card h-100">
+                                    <img src="{{ url_for('static', filename=product.image_url if product.image_url else 'uploads/default.jpg') }}" 
+                                         class="card-img-top" alt="{{ product.name }}" style="height: 400px; object-fit: cover;">
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text text-muted">{{ product.description or 'لايوجد وصف' }}</p>
+                                        <p class="text-muted">الماركة: {{ product.brand or 'غير معروف' }}</p>
+                                        <p class="text-success fw-bold">السعر: {{ product.price | currency }} جنيه</p>
+                                    </div>
+                                    <div class="card-footer text-center">
+                                        <!-- Update Button -->
+                                        <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal{{ product.id }}">
+                                            تعديل
+                                        </button>
+                                        <!-- Delete Form -->
+                                        <form action="{{ url_for('admin.delete_product', product_id=product.id) }}" method="POST" class="d-inline">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('هل أنت متأكد من الحذف؟')">حذف</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
 
-        <!-- Products Grid -->
-        {% for product_type in product_types %}
-            <div class="card mb-4">
-                <div class="card-header bg-secondary text-white">
-                    {{ product_type.name }}
-                </div>
-                <div class="card-body">
-                    {% if product_type.products %}
-                        <div class="row g-4">
-                            {% for product in product_type.products %}
-                                <div class="col-md-4">
-                                    <div class="card h-100">
-                                        <img src="{{ url_for('static', filename=product.image_url if product.image_url else 'uploads/default.jpg') }}" 
-                                             class="card-img-top" alt="{{ product.name }}">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ product.name }}</h5>
-                                            <p class="card-text">{{ product.description }}</p>
-                                            <p class="text-muted">الماركة: {{ product.brand }}</p>
-
-                                           
-                                            <p class="text-success fw-bold">السعر: {{ product.price |currency }} جنيه</p>
-                                        
-                                        
+                            <!-- Update Modal -->
+                            <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ product.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateModalLabel{{ product.id }}">تعديل المنتج</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="card-footer text-center">
-                                            <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateModal{{ product.id }}">
-                                                تعديل
-                                            </button>
-                                            <form action="{{ url_for('admin.delete_product', product_id=product.id) }}" method="POST" class="d-inline">
-                                                <button type="submit" class="btn btn-danger btn-sm">حذف</button>
+                                        <div class="modal-body">
+                                            <form action="{{ url_for('admin.update_product', product_id=product.id) }}" method="POST" enctype="multipart/form-data">
+                                                <div class="mb-3">
+                                                    <label for="name{{ product.id }}" class="form-label">اسم المنتج</label>
+                                                    <input type="text" name="name" id="name{{ product.id }}" value="{{ product.name }}" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="description{{ product.id }}" class="form-label">وصف المنتج</label>
+                                                    <textarea name="description" id="description{{ product.id }}" class="form-control">{{ product.description }}</textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="brand{{ product.id }}" class="form-label">الماركة</label>
+                                                    <input type="text" name="brand" id="brand{{ product.id }}" value="{{ product.brand }}" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="price{{ product.id }}" class="form-label">السعر</label>
+                                                    <input type="number" name="price" id="price{{ product.id }}" step="0.01" value="{{ product.price }}" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="image{{ product.id }}" class="form-label">صورة المنتج</label>
+                                                    <input type="file" name="image" id="image{{ product.id }}" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">تحديث المنتج</button>
                                             </form>
                                         </div>
                                     </div>
                                 </div>
-
-                                <!-- Update Modal -->
-                                <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ product.id }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="updateModalLabel{{ product.id }}">تعديل المنتج</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{{ url_for('admin.update_product', product_id=product.id) }}" method="POST" enctype="multipart/form-data">
-                                                    <div class="mb-3">
-                                                        <label for="name{{ product.id }}" class="form-label">اسم المنتج</label>
-                                                        <input type="text" name="name" id="name{{ product.id }}" value="{{ product.name }}" class="form-control" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="description{{ product.id }}" class="form-label">وصف المنتج</label>
-                                                        <textarea name="description" id="description{{ product.id }}" class="form-control">{{ product.description }}</textarea>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="brand{{ product.id }}" class="form-label">الماركة</label>
-                                                        <input type="text" name="brand" id="brand{{ product.id }}" value="{{ product.brand }}" class="form-control">
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="price{{ product.id }}" class="form-label">السعر</label>
-                                                        <input type="number" name="price" id="price{{ product.id }}" step="0.01" value="{{ product.price }}" class="form-control" required>
-                                                    </div>
-                                                    <div class="mb-3">
-                                                        <label for="image{{ product.id }}" class="form-label">صورة المنتج</label>
-                                                        <input type="file" name="image" id="image{{ product.id }}" class="form-control">
-                                                    </div>
-                                                    <button type="submit" class="btn btn-primary">تحديث المنتج</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <p class="text-muted">لا توجد منتجات في هذا القسم</p>
-                    {% endif %}
-                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <p class="text-muted">لا توجد منتجات في هذا القسم.</p>
+                {% endif %}
             </div>
-        {% endfor %}
-    </div>
-
-
+        </div>
+    {% endfor %}
+</div>
 
 
     
@@ -214,14 +222,6 @@
                     input.setAttribute('required', 'true');
                 });
 
-            } else if (productType === 'solarLamp') {
-                
-                document.getElementById('solarLampProperties').style.display = 'block';
-                var inputs = document.querySelectorAll('#solarLampProperties input');
-
-                inputs.forEach(function(input) {
-                    input.setAttribute('required', 'true');
-                });
             } else if (productType === 'wire') {
                 document.getElementById('wireProperties').style.display = 'block';
                 var inputs = document.querySelectorAll('#wireProperties input');
@@ -235,9 +235,17 @@
 
                 inputs.forEach(function(input) {
                     input.setAttribute('required', 'true');
-                });
+                }); 
+            }
+            else if (productType === 'solar lamp') {
+                document.getElementById('solarLampProperties').style.display = 'block';
+                var inputs = document.querySelectorAll('#solarLampProperties input');
 
-            } else if (productType === 'panel') {
+                inputs.forEach(function(input) {
+                    input.setAttribute('required', 'true');
+                }); 
+            }
+         else if (productType === 'panel') {
                 document.getElementById('panelProperties').style.display = 'block';
                 var inputs = document.querySelectorAll('#panelProperties input');
 

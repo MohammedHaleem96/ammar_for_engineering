@@ -6,11 +6,142 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
     <title>من نحن</title>
 </head>
+
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us - MultiBusiness Installations</title>
+<!-- Bootstrap CSS for responsive design and styling -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    .team-member img {
+        width: 100%;
+        height: auto;
+        border-radius: 50%;
+        border: 4px solid #007bff;
+    }
+    .team-member {
+        text-align: center;
+        padding: 20px;
+        border: 2px solid #ddd;
+        margin-bottom: 20px;
+        border-radius: 10px;
+    }
+    .project-img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+    .project {
+        margin-bottom: 20px;
+    }
+    .project h5 {
+        margin-top: 10px;
+    }
+    .about-text {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    .header-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+</style>
+</head>
+
 <body>
-    <div class="container">
-        <h1>welcome</h1>
-        <p>هذا الموقع قيد الإنشاء. يرجى العودة لاحقًا.</p>
-        <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
+    
+            <!-- Header Section with Image -->
+            <header class="container mt-4">
+                <img src="https://via.placeholder.com/1200x400" alt="Company Overview" class="header-image mb-4">
+                <h1 class="text-center text-primary">About Us</h1>
+                <p class="text-center about-text">
+                    We are a leading multi-business company specializing in solar installation, air conditioning systems,
+                    CCTV surveillance, and network solutions. With a team of dedicated professionals and years of experience,
+                    we aim to deliver top-notch services that exceed client expectations.
+                </p>
+            </header>
+        
+            <!-- Team Section -->
+            <section class="container">
+                <h2 class="text-center text-primary mb-4">Meet Our Team</h2>
+                <div class="row">
+                    <!-- Engineer 1 -->
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/150" alt="Engineer 1">
+                            <h4>John Doe</h4>
+                            <p>Lead Engineer - Solar Installation</p>
+                        </div>
+                    </div>
+                    <!-- Engineer 2 -->
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/150" alt="Engineer 2">
+                            <h4>Jane Smith</h4>
+                            <p>Senior Technician - AC & HVAC</p>
+                        </div>
+                    </div>
+                    <!-- Engineer 3 -->
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/150" alt="Engineer 3">
+                            <h4>Sam Brown</h4>
+                            <p>CCTV & Network Installation Expert</p>
+                        </div>
+                    </div>
+                    <!-- Engineer 4 -->
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <img src="https://via.placeholder.com/150" alt="Engineer 4">
+                            <h4>Alice Green</h4>
+                            <p>Project Manager - Installation Services</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        
+            <!-- Projects Section -->
+            <section class="container">
+                <h2 class="text-center text-primary mb-4">Our Recent Projects</h2>
+                <div class="row">
+                    <!-- Solar Installation Project -->
+                    <div class="col-md-4 project">
+                        <img src="https://via.placeholder.com/400x200" alt="Solar Project" class="project-img">
+                        <h5>Residential Solar Installation</h5>
+                        <p>We completed a large-scale solar power installation in a residential area, providing clean and renewable energy to over 50 households.</p>
+                    </div>
+                    <!-- Air Conditioning Project -->
+                    <div class="col-md-4 project">
+                        <img src="https://via.placeholder.com/400x200" alt="AC Project" class="project-img">
+                        <h5>Commercial Air Conditioning Installation</h5>
+                        <p>Our team installed state-of-the-art air conditioning units for a major office complex, ensuring comfort and energy efficiency.</p>
+                    </div>
+                    <!-- CCTV Project -->
+                    <div class="col-md-4 project">
+                        <img src="https://via.placeholder.com/400x200" alt="CCTV Project" class="project-img">
+                        <h5>CCTV Surveillance System</h5>
+                        <p>We set up a comprehensive CCTV surveillance system for a shopping mall, enhancing security and peace of mind for customers and staff.</p>
+                    </div>
+                </div>
+            </section>
+        
+            <!-- Footer Section -->
+            <footer class="container mt-5">
+                <div class="text-center">
+                    <p class="text-muted">© 2024 MultiBusiness Installations. All rights reserved.</p>
+                    <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
+                </div>
+            </footer>
+        
+            <!-- Bootstrap JS (Optional) -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+
     </div>
 </body>
 </html>

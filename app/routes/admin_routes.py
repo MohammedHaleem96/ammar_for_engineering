@@ -425,8 +425,10 @@ def add_product():
 @admin_bp.route('/signout')
 @login_required
 def signout():
+    logout_user()
+    
+    flash('تم تسجيل خروج بنجاح', 'success')
     return render_template('admin/login_form.html')
-
 
 
 def get_upload_folder(subfolder):

@@ -1,38 +1,58 @@
-<!-- admin/accomplished_project.html -->
 {% block content %}
+
 <div class="container mt-5">
-    <h2 class="text-center">Add Accomplished Project</h2>
-    <form method="POST" action="{{ url_for('admin.add_accomplished_project') }}">
+    <h2 class="text-center text-primary mb-4">Add Accomplished Project</h2>
+    <form method="POST" action="{{ url_for('admin.add_accomplished_project') }}" enctype="multipart/form-data">
+        <!-- Project Name -->
         <div class="form-group">
             <label for="project_name">Project Name</label>
-            <input type="text" class="form-control" id="project_name" name="project_name" required>
+            <input type="text" class="form-control form-control-lg" id="project_name" name="project_name" required>
         </div>
+
+        <!-- Project Type -->
         <div class="form-group">
             <label for="project_type">Project Type</label>
-            <select class="form-control" id="project_type" name="project_type">
+            <select class="form-control form-control-lg" id="project_type" name="project_type">
                 <option value="residential">Residential</option>
                 <option value="commercial">Commercial</option>
                 <option value="industrial">Industrial</option>
             </select>
         </div>
+
+        <!-- Location -->
         <div class="form-group">
             <label for="location">Location</label>
-            <input type="text" class="form-control" id="location" name="location" required>
+            <input type="text" class="form-control form-control-lg" id="location" name="location" required>
         </div>
+
+        <!-- Description -->
         <div class="form-group">
             <label for="description">Project Description</label>
-            <textarea class="form-control" id="description" name="description" rows="4" required></textarea>
+            <textarea class="form-control form-control-lg" id="description" name="description" rows="4" required></textarea>
         </div>
+
+        <!-- Completion Date -->
         <div class="form-group">
             <label for="completion_date">Completion Date</label>
-            <input type="date" class="form-control" id="completion_date" name="completion_date" required>
+            <input type="date" class="form-control form-control-lg" id="completion_date" name="completion_date" required>
         </div>
-        <button type="submit" class="btn btn-primary mt-3">Save Project</button>
+
+        <!-- Image Upload -->
+        <div class="form-group">
+            <label for="project_image">Project Image</label>
+            <input type="file" class="form-control-file" id="project_image" name="project_image" onchange="previewImage(event)">
+            <div id="imagePreview" class="mt-2">
+                <img id="preview" src="#" alt="Image Preview" class="img-fluid rounded" style="max-width: 100%; display: none;">
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-lg btn-success mt-3">Save Project</button>
     </form>
 
     <hr>
-    <h3 class="mt-5">Manage Accomplished Projects</h3>
-    <table class="table table-bordered">
+    <h3 class="mt-5 text-center text-primary">Manage Accomplished Projects</h3>
+    <table class="table table-striped table-bordered shadow-lg mt-4">
         <thead>
             <tr>
                 <th>Project Name</th>
@@ -60,4 +80,78 @@
         </tbody>
     </table>
 </div>
+
+<!-- Custom Styles for Glossy Effect and Table -->
+<style>
+    .form-control, .form-control-file, .btn {
+        border-radius: 8px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-control:focus, .form-control-file:focus, .btn:hover {
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+        border-color: #007bff;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+        border-color: #1e7e34;
+    }
+
+    .table {
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f2f2f2;
+    }
+
+    .table th, .table td {
+        text-align: center;
+        padding: 15px;
+    }
+
+    #imagePreview {
+        border: 2px solid #007bff;
+        padding: 10px;
+        border-radius: 8px;
+        background-color: #f8f9fa;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    #preview {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        max-height: 200px;
+    }
+
+    .shadow-lg {
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+</style>
+
+<script>
+    function previewImage(event) {
+        var preview = document.getElementById('preview');
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            preview.src = reader.result;
+            preview.style.display = 'block';
+        };
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
 {% endblock %}

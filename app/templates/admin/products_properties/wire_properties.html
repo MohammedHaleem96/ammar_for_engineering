@@ -1,0 +1,28 @@
+<h5>=========== Wire Properties ===========</h5>
+
+<div class="row mb-2">
+    <div class="col-2">
+        <label for="size" class="form-label">Size (mm²)</label>
+        <input type="number" step="0.01" id="size" name="size" class="form-control" placeholder="Size" required>
+    </div>
+    <div class="col-2">
+        <label for="length" class="form-label">Length (m)</label>
+        <input type="number" step="0.01" id="length" name="length" class="form-control" placeholder="Length" required>
+    </div>
+    <div class="col-2">
+        <label for="wire_gauge" class="form-label">Wire Gauge (AWG)</label>
+        <input type="number" step="0.01" id="wire_gauge" name="wire_gauge" class="form-control" placeholder="Wire Gauge">
+    </div>
+</div>
+
+<!-- Optional: Use select options if you have predefined values for wire gauge, size, or material types -->
+<div class="row mb-2">
+    <div class="col-2">
+        <label for="material" class="form-label">Material</label>
+        <select id="material" name="material" class="form-control">
+            {% for material in materials %}
+                <option value="{{ material }}">{{ material }}</option>
+            {% endfor %}
+        </select>
+    </div>
+</div>
