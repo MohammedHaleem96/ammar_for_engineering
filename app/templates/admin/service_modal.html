@@ -1,0 +1,30 @@
+<!-- Update Modal -->
+<div class="modal fade" id="editeModal{{ service.id }}" tabindex="-1" aria-labelledby="editeModalLabel{{ service.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editeModalLabel{{ service.id }}">Update Service </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('admin.edit_service', service_id=service.id) }}" method="POST">
+                    
+                    <div class="mb-3">
+                        <label for="title{{ service.id }}" class="form-label"> Service Name</label>
+                        <input type="text" name="title" id="title{{ service.id }}" value="{{ service.title }}" class="form-control" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="description{{ service.id }}" class="form-label"> Description</label>
+                        <textarea name="description" id="description{{ service.id }}" class="form-control" required>{{ service.description }}</textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image_url{{ service.id }}" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="image_url{{ service.id }}" name="image_url" {% if not service %}required{% endif %}>
+                    </div>
+                
+                    <button type="submit" class="btn btn-primary">Update Service</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

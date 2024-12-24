@@ -1,10 +1,4 @@
-{% extends 'admin/base.html' %}
-
-{% block content %}
-<div class="container mt-5">
-    <h2>Edit Service</h2>
-    <form method="POST"  action="{{url_for('admin.edit_service', service_id=service.id) }}"  enctype="multipart/form-data">
-
+<form method="POST" enctype="multipart/form-data">
     <div class="mb-3">
         <label for="title" class="form-label">Service Name</label>
         <input type="text" class="form-control" id="title" name="title" value="{{ service.title if service else '' }}" required>
@@ -19,10 +13,7 @@
         <label for="image_url" class="form-label">Image</label>
         <input type="file" class="form-control" id="image_url" name="image_url" {% if not service %}required{% endif %}>
     </div>
-    <button type="submit" class="btn btn-primary">edit</button>
+
+    <button type="submit" class="btn btn-primary">add service</button>
     <a href="{{ url_for('admin.services') }}" class="btn btn-secondary">Cancel</a>
-
-
-    </form>
-</div>
-{% endblock %}
+</form>

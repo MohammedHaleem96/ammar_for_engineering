@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request,Blueprint
 from app.models.products import Product, Inverter, Battery, Panel,ProductType
 from app.models.AccomplishedProject import AccomplishedProject
+from app.models.ourSevices import Service
 
 
 from app import db
@@ -31,13 +32,14 @@ def about():
 
 @user_bp.route('/services')
 def services():
-    return render_template('user/services.html')
+    services = Service.query.all()
+    return render_template('user/services.html', services=services ,title="خدماتنا")
 
 @user_bp.route('/completed-projects')
 def completed_projects():
     projects = AccomplishedProject.query.all()
 
-    return render_template('user/accomplished_projects.html',projects = projects)
+    return render_template('user/projects.html',projects = projects)
 
 @user_bp.route('/products')
 def products():

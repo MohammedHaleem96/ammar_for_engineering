@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
+{% extends 'admin/base.html' %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,23 +11,12 @@
     <meta name="description" content="">
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="generator" content="Hugo 0.122.0">
-    <title>Dashboard Template · Bootstrap v5.3</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/dashboard.rtl.css') }}">
-    <script src="{{ url_for('static', filename='scripts/dashboard.js') }}"></script>
-
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/dashboard/">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
-
-<link href="{{url_for('static', filename='styles/bootstrap.min.css')}}" rel="stylesheet">
-
 
 </head>
 
+{% block content %}
 
 <body  onload="showProductProperties(productType.value)">
-    {% include 'admin/dashboard_base.html' %}
 
     <div class="container mt-4">
         <h1 class="text-center">إدارة المنتجات</h1>
@@ -139,45 +128,9 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Update Modal -->
-                            <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ product.id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updateModalLabel{{ product.id }}">تعديل المنتج</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <form action="{{ url_for('admin.update_product', product_id=product.id) }}" method="POST" enctype="multipart/form-data">
-                                                <div class="mb-3">
-                                                    <label for="name{{ product.id }}" class="form-label">اسم المنتج</label>
-                                                    <input type="text" name="name" id="name{{ product.id }}" value="{{ product.name }}" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="description{{ product.id }}" class="form-label">وصف المنتج</label>
-                                                    <textarea name="description" id="description{{ product.id }}" class="form-control">{{ product.description }}</textarea>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="brand{{ product.id }}" class="form-label">الماركة</label>
-                                                    <input type="text" name="brand" id="brand{{ product.id }}" value="{{ product.brand }}" class="form-control">
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="price{{ product.id }}" class="form-label">السعر</label>
-                                                    <input type="number" name="price" id="price{{ product.id }}" step="0.01" value="{{ product.price }}" class="form-control" required>
-                                                </div>
-                                                <div class="mb-3">
-                                                    <label for="image{{ product.id }}" class="form-label">صورة المنتج</label>
-                                                    <input type="file" name="image" id="image{{ product.id }}" class="form-control">
-                                                </div>
-                                                <button type="submit" class="btn btn-primary">تحديث المنتج</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
+                            {% include 'admin/product_modal.html' with context %}   
+                            {% endfor %}
+                        </div>
                 {% else %}
                     <p class="text-muted">لا توجد منتجات في هذا القسم.</p>
                 {% endif %}
@@ -348,3 +301,4 @@
 
 </body>
 </html>
+{% endblock %}

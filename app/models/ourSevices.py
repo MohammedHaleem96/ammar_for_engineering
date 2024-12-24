@@ -2,12 +2,14 @@ from datetime import datetime
 from app import db
 
 
-class OurService(db.Model):
-    __tablename__ = 'our_services'
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), nullable=False)
-    description = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+class Service(db.Model):
     
+    __tablename__ = 'services'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    description = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(255), nullable=False)
+
     def __repr__(self):
-        return f'<OurService {self.name}>'
+        return f"<Service {self.title}>"

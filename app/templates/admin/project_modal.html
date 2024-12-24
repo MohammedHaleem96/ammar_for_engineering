@@ -1,0 +1,51 @@
+
+<!-- Update Modal -->
+<div class="modal fade" id="editeModal{{ project.id }}" tabindex="-1" aria-labelledby="editeModalLabel{{ project.id }}" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editeModalLabel{{ project.id }}">Update project </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{{ url_for('admin.edit_project', project_id=project.id) }}" method="POST">
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Project Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="{{ project.name }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="type" class="form-label">Project Type</label>
+                            <select class="form-select" id="type" name="type" required>
+                                <option value="commercial" {% if project.type == 'commercial' %}selected{% endif %}>Commercial</option>
+                                <option value="residential" {% if project.type == 'residential' %}selected{% endif %}>Residential</option>
+                                <option value="industrial" {% if project.type == 'industrial' %}selected{% endif %}>Industrial</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" id="location" name="location" value="{{ project.location }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" rows="4" required>{{ project.description }}</textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="completion_date" class="form-label">Completion Date</label>
+                            <input type="date" class="form-control" id="completion_date" name="completion_date" value="{{ project.completion_date }}" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image_url{{ project.id }}" class="form-label">Image</label>
+                            <input type="file" class="form-control" id="image_url{{ project.id }}" name="image_url" {% if not service %}required{% endif %}>
+                        </div>
+                    
+                        <button type="submit" class="btn btn-primary">Update Service</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

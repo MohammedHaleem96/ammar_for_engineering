@@ -1,0 +1,29 @@
+{% extends 'user/base.html' %}
+
+{% block content %}
+
+<table class="table table-striped table-bordered shadow-lg mt-4">
+
+    <thead>
+        <tr>
+            <th>Project Name</th>
+            <th>Type</th>
+            <th>Location</th>
+            <th>Description</th>
+            <th>Completion Date</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {%for project in project%}
+        <tr>
+            <td>{{ project.name }}</td>
+            <td>{{ project.type }}</td>
+            <td>{{ project.location }}</td>
+            <td>{{ project.description }}</td>
+            <td>{{ project.completion_date }}</td>
+
+        </tr>
+        {% endfor %}
+
+{%endblock%}

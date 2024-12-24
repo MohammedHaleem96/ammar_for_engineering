@@ -2,7 +2,7 @@ from datetime import datetime
 from app import db
 
 class AccomplishedProject(db.Model):
-    __tablename__ = 'accomplished_projects'
+    __tablename__ = 'projects'
     
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False)

@@ -1,3 +1,7 @@
+{% extends 'admin/base.html' %}
+
+
+
 {% block content %}
 
 <div class="container mt-5">
@@ -72,10 +76,14 @@
                 <td>{{ project.description }}</td>
                 <td>{{ project.completion_date }}</td>
                 <td>
-                    <a href="{{ url_for('admin.edit_project', project_id=project.id) }}" class="btn btn-warning btn-sm">Edit</a>
-                    <a href="{{ url_for('admin.delete_project', project_id=project.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                    <!-- Update Button -->
+                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editeModal{{ project.id }}">
+                        Update
+                    </button>
+                    <a href="{{ url_for('admin.delete_project', project_id=project.id) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to remove this project')">Delete</a>
                 </td>
             </tr>
+            {% include 'admin/project_modal.html' %}
             {% endfor %}
         </tbody>
     </table>

@@ -1,0 +1,37 @@
+
+                            <!-- Update Modal -->
+                            <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ product.id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="updateModalLabel{{ product.id }}">تعديل المنتج</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="{{ url_for('admin.update_product', product_id=product.id) }}" method="POST" enctype="multipart/form-data">
+                                                <div class="mb-3">
+                                                    <label for="name{{ product.id }}" class="form-label">اسم المنتج</label>
+                                                    <input type="text" name="name" id="name{{ product.id }}" value="{{ product.name }}" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="description{{ product.id }}" class="form-label">وصف المنتج</label>
+                                                    <textarea name="description" id="description{{ product.id }}" class="form-control">{{ product.description }}</textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="brand{{ product.id }}" class="form-label">الماركة</label>
+                                                    <input type="text" name="brand" id="brand{{ product.id }}" value="{{ product.brand }}" class="form-control">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="price{{ product.id }}" class="form-label">السعر</label>
+                                                    <input type="number" name="price" id="price{{ product.id }}" step="0.01" value="{{ product.price }}" class="form-control" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="image{{ product.id }}" class="form-label">صورة المنتج</label>
+                                                    <input type="file" name="image" id="image{{ product.id }}" class="form-control">
+                                                </div>
+                                                <button type="submit" class="btn btn-primary">تحديث المنتج</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>

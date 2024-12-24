@@ -4,7 +4,7 @@ import os
 from datetime import datetime
 from app.models.products import Product, Inverter, Battery, Panel,ProductType, Wire
 from app.models.AccomplishedProject import AccomplishedProject
-from app.models.ourSevices import OurService
+from app.models.ourSevices import Service
 
 #from app.forms import ProductForm, InverterForm, BatteryForm, PanelForm
 from app.models.admins import Admin
@@ -21,6 +21,12 @@ inverter_types = ['Hypred','ups','block']
 # Initialize Blueprint for admin
 admin_bp = Blueprint('admin', __name__)
 
+
+service_page_title = 'manage service'
+project_page_title = 'manage project'
+product_page_title = 'manage product'
+dashboard_page_title = 'Dashboard'
+_page_title = 'manage service'
 
 
 UPLOAD_FOLDER = 'app/static/uploads'
@@ -65,14 +71,14 @@ def add_accomplished_project():
         flash('Project added successfully!', 'success')
         return redirect(url_for('admin.manage_projects'))
     
-    return render_template('admin/accomplished_projects.html', projects=projects)
+    return render_template('admin/projects.html', projects=projects ,title=project_page_title)
 
 
 @admin_bp.route('/manage_projects')
 @login_required
 def manage_projects():
     projects = AccomplishedProject.query.all()
-    return render_template('admin/accomplished_projects.html', projects=projects)
+    return render_template('admin/projects.html', projects=projects,title=project_page_title)
 
 @admin_bp.route('/edit_project/<int:project_id>', methods=['GET', 'POST'])
 @login_required
@@ -119,7 +125,7 @@ def delete_project(project_id):
 
 
 
-
+####   Services ################3
 
 
 
@@ -128,51 +134,53 @@ def delete_project(project_id):
 
 # --- - - --
 # Add Service Route
-@admin_bp.route('/add_service', methods=['GET', 'POST'])
-def add_service():
+@admin_bp.route('/services', methods=['GET', 'POST'])
+def services():
+    services = Service.query.all()
+
     if request.method == 'POST':
-        name = request.form.get('name')
+        title = request.form.get('title')
         description = request.form.get('description')
+        image_url = request.form.get('image_url')
+        image_url = ''
+
         
-        new_service = OurService(name=name, description=description)
+        new_service = Service(title=title, description=description, image_url=image_url)
         db.session.add(new_service)
         db.session.commit()
         
-        flash('Service added successfully!', 'success')
-        return redirect(url_for('admin.manage_services'))
+        return redirect(url_for('admin.services'))
     
-    return render_template('admin/add_service.html')
+    return render_template('admin/manage_services.html',services=services, title=service_page_title)
 
-# Manage Services (List, Edit, Delete)
-@admin_bp.route('/manage_services')
-def manage_services():
-    services = OurService.query.all()
-    return render_template('admin/manage_services.html', services=services)
 
 # Edit Service Route
 @admin_bp.route('/edit_service/<int:service_id>', methods=['GET', 'POST'])
 def edit_service(service_id):
-    service = OurService.query.get_or_404(service_id)
+    service = Service.query.get_or_404(service_id)
+    print("this is service id no :",service_id)
     
     if request.method == 'POST':
-        service.name = request.form.get('name')
+    
+        service.title = request.form.get('title')
         service.description = request.form.get('description')
+        service.image_url = "request.form.get('image_url')"
         db.session.commit()
         
         flash('Service updated successfully!', 'success')
-        return redirect(url_for('admin.manage_services'))
+        return redirect(url_for('admin.services'))
     
     return render_template('admin/edit_service.html', service=service)
 
 # Delete Service Route
 @admin_bp.route('/delete_service/<int:service_id>', methods=['POST'])
 def delete_service(service_id):
-    service = OurService.query.get_or_404(service_id)
+    service = Service.query.get_or_404(service_id)
     db.session.delete(service)
     db.session.commit()
     
     flash('Service deleted successfully!', 'success')
-    return redirect(url_for('admin.manage_services'))
+    return redirect(url_for('admin.services'))
 
 
 
@@ -248,7 +256,7 @@ def login():
 @admin_bp.route('/dashboard')
 @login_required
 def dashboard():
-    return render_template('admin/dashboard.html')
+    return render_template('admin/dashboard.html',title=dashboard_page_title)
 
 @admin_bp.route('/products')
 @login_required
@@ -258,7 +266,7 @@ def products():
         # Query all product types with their products
         product_types = ProductType.query.options(db.joinedload(ProductType.products)).all()
         # Pass the product types to the template
-        return render_template('admin/products.html', product_types=product_types , types = inverter_types)
+        return render_template('admin/products.html', product_types=product_types , title=product_page_title)
 
     except Exception as e:
         return {"error": str(e)}, 500
