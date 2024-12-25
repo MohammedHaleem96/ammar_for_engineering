@@ -1,6 +1,7 @@
+
+
 <!DOCTYPE html>
-<!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,46 +18,35 @@
 
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="navbar">
-            <ul class="nav-list">
-                <li class="nav-item"><a href="{{ url_for('user.index') }}" class="nav-link">الرئيسية</a></li>
-                <li class="nav-item"><a href="{{ url_for('user.about') }}" class="nav-link">من نحن</a></li>
-                <li class="nav-item"><a href="{{ url_for('user.services') }}" class="nav-link">خدماتنا</a></li>
-                <li class="nav-item"><a href="{{ url_for('user.completed_projects') }}" class="nav-link">مشاريع منفذة</a></li>
-                <li class="nav-item"><a href="{{ url_for('calc.estimate_system') }}" class="nav-link">احسب نظامك</a></li>
-                <li class="nav-item"><a href="https://www.google.com/maps?q=15.458249,36.396716" target="_blank" class="nav-link">موقعنا</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Banner -->
-    <section class="banner">
-        <img src="{{ url_for('static', filename='images/dummy_banner.jpg') }}" alt="Dummy Banner" class="banner-image">
-        <div class="banner-text">
-            <h1>مرحبا بكم في شركة عمار للهندسة</h1>
-            <p>نقدم أفضل الخدمات الهندسية لتحقيق رؤيتكم.</p>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('user.index') }}">الرئيسية</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a href="{{ url_for('user.about') }}" class="nav-link">من نحن</a></li>
+                    <li class="nav-item"><a href="{{ url_for('user.services') }}" class="nav-link">خدماتنا</a></li>
+                    <li class="nav-item"><a href="{{ url_for('user.completed_projects') }}" class="nav-link">مشاريع منفذة</a></li>
+                    <li class="nav-item"><a href="{{ url_for('user.estimate_system') }}" class="nav-link">احسب نظامك</a></li>
+                    <li class="nav-item"><a href="https://www.google.com/maps?q=15.458249,36.396716" target="_blank" class="nav-link">موقعنا</a></li>
+                </ul>
+            </div>
         </div>
-    </section>
+    </nav>
 
     <!-- Main Content -->
-    <div class="container">
+    <div class="container mt-4">
         {% block content %}
-        <!-- Content will be injected here -->
+        <!-- Child templates will insert content here -->
         {% endblock %}
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <p>&copy; 2024 شركة عمار للهندسة. جميع الحقوق محفوظة.</p>
-            <ul class="footer-links">
-                <li><a href="">تواصل معنا</a></li>
-                <li><a href="">سياسة الخصوصية</a></li>
-                <li><a href="">الشروط والأحكام</a></li>
-            </ul>
-        </div>
+    <footer class="bg-dark text-white text-center py-3 mt-5">
+        <p>&copy; 2024 Ammar for engineering </p>
     </footer>
 
 </body>

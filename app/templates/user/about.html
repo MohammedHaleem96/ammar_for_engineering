@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/styles.css') }}">
-    <title>من نحن</title>
-</head>
+{% extends 'user/base.html' %}
 
-
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>About Us - MultiBusiness Installations</title>
-<!-- Bootstrap CSS for responsive design and styling -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block content %}
+    
 <style>
     .team-member img {
         width: 100%;
@@ -51,20 +39,9 @@
         border-radius: 8px;
     }
 </style>
-</head>
 
 <body>
-    
-            <!-- Header Section with Image -->
-            <header class="container mt-4">
-                <img src="https://via.placeholder.com/1200x400" alt="Company Overview" class="header-image mb-4">
-                <h1 class="text-center text-primary">About Us</h1>
-                <p class="text-center about-text">
-                    We are a leading multi-business company specializing in solar installation, air conditioning systems,
-                    CCTV surveillance, and network solutions. With a team of dedicated professionals and years of experience,
-                    we aim to deliver top-notch services that exceed client expectations.
-                </p>
-            </header>
+
         
             <!-- Team Section -->
             <section class="container">
@@ -130,18 +107,8 @@
                 </div>
             </section>
         
-            <!-- Footer Section -->
-            <footer class="container mt-5">
-                <div class="text-center">
-                    <p class="text-muted">© 2024 MultiBusiness Installations. All rights reserved.</p>
-                    <a href="{{ url_for('user.index') }}" class="button">العودة إلى الصفحة الرئيسية</a>
-                </div>
-            </footer>
-        
-            <!-- Bootstrap JS (Optional) -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 
     </div>
-</body>
-</html>
+
+{% endblock %}

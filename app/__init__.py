@@ -20,11 +20,9 @@ def create_app():
     with app.app_context():
         from app.routes.user_routes import user_bp  # Import user routes blueprint
         from app.routes.admin_routes import admin_bp  # Import admin routes blueprint
-        from app.routes.calculations_routes import calc_bp  # Import calc routes blueprint
             # Register Blueprints
         app.register_blueprint(user_bp, url_prefix='/user')
         app.register_blueprint(admin_bp, url_prefix='/admin')
-        app.register_blueprint(calc_bp, url_prefix='/calc')
         
 
 

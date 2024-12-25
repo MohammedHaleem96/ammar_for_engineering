@@ -1,6 +1,56 @@
-<h1>total_load = {{total_load}}</h1>
-<h1>total_cost = {{total_cost}}</h1>
-<h1>is_electricity_available = {{is_electricity_available}}</h1>
-<h1>is_want_panels = {{is_want_panels}}</h1>
-<h1>electricity_available_hours = {{electricity_available_hours}}</h1>
-<h1>total_hours_needed = {{total_hours_needed}}</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inverter Systems</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Inverter Systems</h1>
+        <table class="table table-bordered table-striped mt-4">
+            <thead class="table-dark">
+                <tr>
+                    <th>System ID</th>
+                    <th>Inverter Name</th>
+                    <th>Inverter Cost</th>
+                    <th>Number of Batteries</th>
+                    <th>Batteries Cost</th>
+                    <th>Total Capacity (Wh)</th>
+                    <th>System Total Cost</th>
+                    <th>Load 100% Time (hrs)</th>
+                    <th>Load 75% Time (hrs)</th>
+                    <th>Load 50% Time (hrs)</th>
+                    <th>Load 25% Time (hrs)</th>
+                    <th>Electricity Available</th>
+                    <th>Electricity Hours</th>
+                    <th>Total Hours Needed</th>
+                    <th>Number of Rooms</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for system_id, details in systems.items() %}
+                <tr>
+                    <td>{{ system_id }}</td>
+                    <td>{{ details.inverter_name }}</td>
+                    <td>${{ details.inverter_cost }}</td>
+                    <td>{{ details.number_of_battery }}</td>
+                    <td>${{ details.cost_of_batteries }}</td>
+                    <td>{{ details.total_capacity }} Wh</td>
+                    <td>${{ details.system_total_cost }}</td>
+                    <td>{{ details.load_100_time  }} hrs</td>
+                    <td>{{ details.load_75_time  }} hrs</td>
+                    <td>{{ details.load_50_time  }} hrs</td>
+                    <td>{{ details.load_25_time  }} hrs</td>
+                    <td>{{ "Yes" if details.is_electricity_available else "No" }}</td>
+                    <td>{{ details.electricity_available_hours }} hrs</td>
+                    <td>{{ details.total_hours_needed }} hrs</td>
+                    <td>{{ details.number_of_rooms }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

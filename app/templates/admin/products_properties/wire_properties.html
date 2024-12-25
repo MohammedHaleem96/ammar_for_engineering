@@ -15,7 +15,6 @@
     </div>
 </div>
 
-<!-- Optional: Use select options if you have predefined values for wire gauge, size, or material types -->
 <div class="row mb-2">
     <div class="col-2">
         <label for="material" class="form-label">Material</label>
@@ -23,6 +22,7 @@
             {% for material in materials %}
                 <option value="{{ material }}">{{ material }}</option>
             {% endfor %}
+            <option>copper</option>
         </select>
     </div>
 </div>

@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, Blueprint, redirect, url_for,
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
 import os
 from datetime import datetime
-from app.models.products import Product, Inverter, Battery, Panel,ProductType, Wire
+from app.models.products import Product, Inverter, Battery, Panel,ProductType, Wire, Breaker,SolarLamp
 from app.models.AccomplishedProject import AccomplishedProject
 from app.models.ourSevices import Service
 
@@ -371,7 +371,7 @@ def add_product():
                 # Commit the transaction
                 db.session.commit()
 
-                return redirect("products")
+                return redirect(url_for("admin.products"))
 
             except Exception as e:
                 db.session.rollback()  # Rollback on error
@@ -393,41 +393,97 @@ def add_product():
             db.session.add(new_battery)
             # Commit the transaction
             db.session.commit()
+
         elif product_type_name == 'panel':
+        # Retrieve form data using the names from the HTML form
+            panel_wattage = request.form.get('wattage')
+            panel_alpha = request.form.get('alpha')
+            panel_width = request.form.get('width')
+            panel_length = request.form.get('length')
+            panel_thickness = request.form.get('thickness')
+            panel_voc = request.form.get('Voc')
+            panel_vmp = request.form.get('Vmp')
+            panel_isc = request.form.get('Isc')
+            panel_imp = request.form.get('Imp')
 
-            panel_wattage = request.form.get('panel_power')
-            panel_alpha = request.form.get('panel_alpha')
-
-            panel_width = request.form.get('panel_width')
-            panel_length= request.form.get('panel_length')
-            panel_thickness = request.form.get('panel_thickness')
-
-            panel_voc = request.form.get('panel_voc')
-            panel_vmp = request.form.get('panel_vmp')
-
-            panel_isc = request.form.get('panel_isc')
-            panel_imp = request.form.get('panel_imp')
-
-            new_battery = Panel(
-                id = product.id, 
-                wattage = panel_wattage,
-                alpha = panel_alpha,
-                width = panel_width,
-                length = panel_length,
+                # Create a new Panel object
+            new_panel = Panel(
+                id=product.id, 
+                wattage=panel_wattage,
+                alpha=panel_alpha,
+                width=panel_width,
+                length=panel_length,
                 thickness=panel_thickness,
                 Voc=panel_voc,
                 Vmp=panel_vmp,
                 Isc=panel_isc,
                 Imp=panel_imp,
-            )
-            db.session.add(new_battery)
-            # Commit the transaction
+                )
+
+            db.session.add(new_panel)
+                # Commit the transaction
             db.session.commit()
 
+        elif product_type_name == 'breaker':
+            # Retrieve form data using the names from the HTML form
+            breaker_rated_current = request.form.get('rated_current')
+            breaker_rated_voltage = request.form.get('rated_voltage')
+            breaker_poles = request.form.get('poles')
+            breaker_category = request.form.get('category')
 
-    else:
-        print("oh no")
-    return redirect('admin.products')
+            # Create a new Breaker object
+            new_breaker = Breaker(
+                id=product.id,
+                rated_current=breaker_rated_current,
+                rated_voltage=breaker_rated_voltage,
+                poles=breaker_poles,
+                category=breaker_category,
+            )
+            
+            db.session.add(new_breaker)
+                # Commit the transaction
+            db.session.commit()
+        
+        elif product_type_name == 'wire':
+            # Retrieve form data using the names from the HTML form
+            wire_size = request.form.get('size')
+            wire_length = request.form.get('length')
+            wire_gauge = request.form.get('wire_gauge')
+            wire_material = request.form.get('material')
+
+            # Create a new Wire object
+            new_wire = Wire(
+                id=product.id,
+                size=wire_size,
+                length=wire_length,
+                wire_gauge=wire_gauge,
+                # Material is not in the model; you may need to add it if required.
+            )
+            
+            db.session.add(new_wire)
+                # Commit the transaction
+            db.session.commit()
+        elif product_type_name == 'solar lamp':
+            # Retrieve form data using the names from the HTML form
+            solar_panel_capacity = request.form.get('solar_panel_capacity')
+            operation_time = request.form.get('operation_time')
+            lamp_power = request.form.get('lamp_power')
+
+            # Create a new SolarLamp object
+            new_solar_lamp = SolarLamp(
+                id=product.id,
+                solar_panel_capacity=solar_panel_capacity,
+                operation_time=operation_time,
+                lamp_power=lamp_power,
+            )
+            
+            db.session.add(new_solar_lamp)
+                # Commit the transaction
+            db.session.commit()
+
+        else:
+            print("else route")
+    return redirect(url_for('admin.products'))
 
 
 @admin_bp.route('/signout')

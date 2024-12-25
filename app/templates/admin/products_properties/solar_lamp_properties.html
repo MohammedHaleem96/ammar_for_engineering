@@ -1,15 +1,16 @@
 <h5>=========== Solar Lamp Properties ===========</h5>
+
 <div class="row mb-2">
     <div class="col-2">
-        <label for="solar_lamp_panel_capacity" class="form-label">Panel Capacity (W)</label>
-        <input type="number" id="solar_lamp_panel_capacity" name="solar_lamp_panel_capacity" class="form-control" placeholder="Panel Capacity">
+        <label for="solar_panel_capacity" class="form-label">Solar Panel Capacity (W)</label>
+        <input type="number" step="0.01" id="solar_panel_capacity" name="solar_panel_capacity" class="form-control" placeholder="Solar Panel Capacity" required>
     </div>
     <div class="col-2">
-        <label for="solar_lamp_operation_time" class="form-label">Operation Time (Hours)</label>
-        <input type="number" id="solar_lamp_operation_time" name="solar_lamp_operation_time" class="form-control" placeholder="Operation Time">
+        <label for="operation_time" class="form-label">Operation Time (hrs)</label>
+        <input type="number" step="0.01" id="operation_time" name="operation_time" class="form-control" placeholder="Operation Time" required>
     </div>
     <div class="col-2">
-        <label for="solar_lamp_power" class="form-label">Lamp Power (W)</label>
-        <input type="number" id="solar_lamp_power" name="solar_lamp_power" class="form-control" placeholder="Lamp Power">
+        <label for="lamp_power" class="form-label">Lamp Power (W)</label>
+        <input type="number" step="0.01" id="lamp_power" name="lamp_power" class="form-control" placeholder="Lamp Power" required>
     </div>
 </div>
